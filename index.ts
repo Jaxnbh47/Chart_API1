@@ -8,7 +8,7 @@ const port = 3001;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use("/items", itemRouter);
+app.use("/cart-items", itemRouter);
 
 app.listen(port, (): void => {
     console.log(`Listening on port ${port}`);

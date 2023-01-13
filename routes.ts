@@ -1,5 +1,4 @@
 import express, { Router, Request, Response } from "express";
-import { request } from "http";
 import { Item } from "./item";
 
 //hard code some data
@@ -92,6 +91,7 @@ itemRouter.put("/:id", async (req: Request, res: Response): Promise<Response> =>
         itemFound.price = req.body.price,
         itemFound.product = req.body.product,
         itemFound.quantity = req.body.quantity
+        itemFound.isActive = Boolean(req.body.isActive);
 
         return res.status(200).json(itemFound)
     } else {
@@ -110,9 +110,7 @@ itemRouter.put("/:id", async (req: Request, res: Response): Promise<Response> =>
 
 
   //soft delete updates
-  itemRouter.delete(
-  "/:id",
-  async (req: Request, res: Response): Promise<Response> => {
+  itemRouter.delete("/:id", async (req: Request, res: Response): Promise<Response> => {
     let itemFound = itemArray.find((x) => x.id === Number(req.params.id));
 
     if (itemFound === undefined) {

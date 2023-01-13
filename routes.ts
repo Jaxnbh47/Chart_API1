@@ -66,7 +66,7 @@ function GetNextId() {
 }
 
 itemRouter.put("/:id", async (req: Request, res: Response): Promise<Response> => {
-    let itemFound= itemArray.find((x) => x.id === Number(req.params.id));
+    let itemFound = itemArray.find((x) => x.id === Number(req.params.id));
 
     if (itemFound !== undefined) {
         itemFound.price = req.body.price,
@@ -77,5 +77,27 @@ itemRouter.put("/:id", async (req: Request, res: Response): Promise<Response> =>
     } else {
         return res.status(404).send("Item not found")
     }
-    
   });
+
+  // itemRouter.delete("/:id", async (req: Request, res:Response): Promise<Response> => {
+  //   let deletedItems = itemArray.filter((x) => x.id !== Number(req.params.id));
+  //   itemArray = deletedItems;
+  //   if(deletedItems.length === 0) {
+  //     return res.status(404).send("ID not found")
+  //   }
+  //   return res.status(204).send("Item Deleted")
+  // });
+
+  itemRouter.delete(
+  "/:id",
+  async (req: Request, res: Response): Promise<Response> => {
+    let itemFound = itemArray.find((x) => x.id === Number(req.params.id));
+
+    if (itemFound === undefined) {
+      return res.status(404).send("ID not found");
+    } else {
+      itemArray = itemArray.filter((x) => x.id !== Number(req.params.id))
+      return res.status(204).send("Item Deleted")
+    }
+  }
+);
